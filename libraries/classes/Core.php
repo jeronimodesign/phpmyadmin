@@ -435,7 +435,13 @@ class Core
         ];
 
         if (preg_match('/^([0-9]+)([KMGT])/i', $size, $matches)) {
-            return $matches[1] * $binaryprefixes[$matches[2]];
+            $value = $matches[1] * $binaryprefixes[$matches[2]];
+
+            if ($value > PHP_INT_MAX) {
+                throw new \InvalidArgumentException('Integer size cannot be greater than PHP_INT_MAX');
+            }
+
+            return $value;
         }
 
         return (int) $size;
