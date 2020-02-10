@@ -484,7 +484,7 @@ class CoreTest extends PmaTestCase
     public function testGetRealSize($size, $expected): void
     {
         if ($expected > PHP_INT_MAX) {
-            return;
+            $this->expectException(\InvalidArgumentException::class);
         }
 
         $this->assertEquals($expected, Core::getRealSize($size));
